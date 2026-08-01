@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Situ Ciembung</title>
+	<meta name="description" content="Landing page wisata Situ Ciembung yang responsif untuk mobile dan desktop." />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						moss: {
+							50: '#f3f7f2',
+							100: '#dfe8dd',
+							200: '#bfd0ba',
+							300: '#98b291',
+							400: '#72916a',
+							500: '#547557',
+							600: '#3f5d46',
+							700: '#31483a',
+							800: '#25362d',
+							900: '#1d2924',
+						},
+						sand: '#e9e3d7',
+						ink: '#173126',
+					},
+					fontFamily: {
+						display: ['Cormorant Garamond', 'serif'],
+						body: ['Manrope', 'sans-serif'],
+					},
+					boxShadow: {
+						soft: '0 24px 60px rgba(20, 45, 32, 0.22)',
+					},
+					backgroundImage: {
+						'hero-mobile': "linear-gradient(180deg, rgba(17, 35, 29, 0.18) 0%, rgba(17, 35, 29, 0.42) 50%, rgba(17, 35, 29, 0.72) 100%), url('img/headmo.jpeg')",
+						'hero-desktop': "linear-gradient(90deg, rgba(17, 35, 29, 0.78) 0%, rgba(17, 35, 29, 0.44) 44%, rgba(17, 35, 29, 0.22) 100%), url('img/head2.jpeg')",
+					}
+				},
+			},
+		};
+	</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+		rel="stylesheet" />
+</head>
+
+<body class="bg-sand font-body text-ink antialiased">
+	<main class="min-h-screen overflow-x-hidden">
+		<section class="relative min-h-screen bg-hero-mobile bg-cover bg-center md:bg-hero-desktop">
+			<div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-[#0f2019]/75"></div>
+
+			<header class="relative z-20 border-b border-white/[0.15] bg-[#ece6da]/95 md:bg-transparent md:border-b-0">
+				<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8 md:py-6">
+					<a href="#home"
+						class="text-[1.65rem] font-semibold tracking-tight text-[#2f5b47] md:text-white md:text-[2rem]"
+						style="font-family: 'Cormorant Garamond', serif;">Situ Ciembung</a>
+
+					<nav class="hidden items-center gap-8 text-sm font-semibold text-white/90 md:flex">
+						<a href="#home" class="transition hover:text-white">Beranda</a>
+						<a href="#info" class="transition hover:text-white">Info Wisata</a>
+						<a href="#galeri" class="transition hover:text-white">Galeri</a>
+					</nav>
+
+					<button id="menuButton"
+						class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#244a39]/20 bg-white/70 text-[#244a39] shadow-sm transition hover:bg-white md:hidden"
+						aria-controls="mobileMenu" aria-expanded="false" aria-label="Buka menu">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6"
+							aria-hidden="true">
+							<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"></path>
+						</svg>
+					</button>
+				</div>
+
+				<div id="mobileMenu"
+					class="hidden border-t border-[#244a39]/10 bg-[#f2ece1]/95 px-4 py-3 backdrop-blur-md md:hidden">
+					<div class="grid gap-2 text-sm font-semibold text-[#244a39]">
+						<a href="#home" class="rounded-2xl px-4 py-3 transition hover:bg-white">Beranda</a>
+						<a href="#info" class="rounded-2xl px-4 py-3 transition hover:bg-white">Info Wisata</a>
+						<a href="#galeri" class="rounded-2xl px-4 py-3 transition hover:bg-white">Galeri</a>
+					</div>
+				</div>
+			</header>
+
+			<div id="home"
+				class="relative z-10 mx-auto flex min-h-[calc(100vh-73px)] max-w-7xl items-center px-4 pb-10 pt-8 sm:px-6 lg:px-8 md:min-h-[calc(100vh-96px)] md:pt-12">
+				<div class="grid w-full items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+					<div
+						class="mx-auto flex max-w-3xl flex-col items-center text-center text-white lg:mx-0 lg:items-start lg:text-left">
+						<div
+							class="mb-6 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/[0.15] px-5 py-2 text-[0.72rem] font-bold uppercase tracking-[0.28em] text-white/90 backdrop-blur-md sm:text-xs">
+							<span class="inline-block h-2 w-2 rounded-full bg-[#8ae0ad]"></span>
+							Wisata Alam Garut
+						</div>
+
+						<h1 class="max-w-4xl text-5xl leading-[0.9] tracking-tight sm:text-6xl lg:text-8xl"
+							style="font-family: 'Cormorant Garamond', serif;">
+							Situ Ciembung
+						</h1>
+
+						<p class="mt-6 max-w-2xl text-base leading-7 text-white/[0.85] sm:text-lg lg:text-xl">
+							Destinasi wisata alam di Desa Padaawas, Kecamatan Pasirwangi, Kabupaten Garut.
+						</p>
+						<p class="mt-2 max-w-2xl text-base leading-7 text-white/[0.50] sm:text-sm lg:text-md">
+							Danau alami yang tenang, udara sejuk perbukitan, dan kuliner lokal yang hangat menanti Anda.
+						</p>
+
+						<div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+							<a href="/virtual-tour/index.htm"
+								class="inline-flex items-center justify-center rounded-full bg-[#60c28c] px-8 py-4 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#4eb07b]">
+								Lihat Virtual Tour
+							</a>
+							<a href="#galeri"
+								class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-4 text-sm font-extrabold text-white backdrop-blur-md transition hover:bg-white/20">
+								Lihat Galeri
+							</a>
+						</div>
+
+						<div
+							class="mt-10 grid w-full grid-cols-3 gap-4 rounded-[2rem] border border-white/10 bg-white/[0.08] px-4 py-5 backdrop-blur-md md:max-w-xl md:gap-6 md:px-6">
+							<div class="text-center">
+								<div class="text-2xl font-extrabold tracking-tight sm:text-3xl"
+									style="font-family: 'Cormorant Garamond', serif;">Rp 5.000</div>
+								<div class="mt-1 text-xs text-white/[0.72] sm:text-sm">Tiket Masuk</div>
+							</div>
+							<div class="text-center">
+								<div class="text-2xl font-extrabold tracking-tight sm:text-3xl"
+									style="font-family: 'Cormorant Garamond', serif;">Setiap Hari</div>
+								<div class="mt-1 text-xs text-white/[0.72] sm:text-sm">Buka Harian</div>
+							</div>
+							<div class="text-center">
+								<div class="text-2xl font-extrabold tracking-tight sm:text-3xl"
+									style="font-family: 'Cormorant Garamond', serif;">6 UMKM+</div>
+								<div class="mt-1 text-xs text-white/[0.72] sm:text-sm">Kuliner Lokal</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="relative hidden lg:block">
+						<div class="absolute -left-10 top-8 h-40 w-40 rounded-full bg-[#8ae0ad]/20 blur-3xl"></div>
+						<div class="absolute -bottom-8 right-6 h-48 w-48 rounded-full bg-[#244a39]/30 blur-3xl"></div>
+
+						<div
+							class="relative overflow-hidden rounded-[2.5rem] border border-white/[0.15] bg-white/10 p-4 shadow-soft backdrop-blur-md">
+							<div class="overflow-hidden rounded-[2rem] border border-white/10">
+								<img src="img/head2.jpeg" />
+							</div>
+
+							<div class="mt-4 grid grid-cols-2 gap-4 text-white">
+								<div class="rounded-[1.5rem] border border-white/10 bg-white/10 p-4 backdrop-blur-md">
+									<div class="text-sm uppercase tracking-[0.25em] text-white/60">Nama Wisata</div>
+									<div class="mt-2 text-xl font-bold"
+										style="font-family: 'Cormorant Garamond', serif;">Embung Padaawas</div>
+								</div>
+								<div class="rounded-[1.5rem] border border-white/10 bg-white/10 p-4 backdrop-blur-md">
+									<div class="text-sm uppercase tracking-[0.25em] text-white/60">Lokasi</div>
+									<div class="mt-2 text-xl font-bold"
+										style="font-family: 'Cormorant Garamond', serif;">Pasirwangi, Kabupaten Garut
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<a href="#info"
+					class="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/[0.15] bg-white/10 p-3 text-white/90 backdrop-blur-md transition hover:bg-white/20 md:bottom-8">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5"
+						aria-hidden="true">
+						<path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+					</svg>
+				</a>
+			</div>
+		</section>
+
+		<section id="info" class="bg-[#f3eee3] py-16 sm:py-20">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
+					<div class="rounded-[2rem] bg-white p-8 shadow-[0_18px_50px_rgba(20,45,32,0.08)]">
+						<p class="text-sm font-bold uppercase tracking-[0.24em] text-[#50745e]">Info Wisata</p>
+						<h2 class="mt-3 text-2xl leading-tight text-[#193226] sm:text-3xl"
+							style="font-family: 'Cormorant Garamond', serif;">Suasana yang relatif sejuk serta
+							pemandangan di sekitar danau</h2>
+						<p class="mt-4 text-sm leading-7 text-[#5d6f66] sm:text-base">
+							Tempat ini sering dikunjungi oleh masyarakat untuk menghabiskan waktu bersama keluarga
+							maupun teman
+						</p>
+
+						<div class="mt-6 grid gap-4 sm:grid-cols-2">
+							<div class="rounded-3xl bg-[#eef4ee] p-5">
+								<div class="text-sm font-bold text-[#315443]">Operasional</div>
+								<div class="mt-2 text-xl font-extrabold text-[#183226]">Setiap Hari</div>
+								<div class="mt-1 text-sm text-[#60756d]">Buka Harian</div>
+							</div>
+							<div class="rounded-3xl bg-[#eef4ee] p-5">
+								<div class="text-sm font-bold text-[#315443]">Harga Tiket</div>
+								<div class="mt-2 text-xl font-extrabold text-[#183226]">Rp 5.000</div>
+								<div class="mt-1 text-sm text-[#60756d]">Terjangkau untuk semua kalangan</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+						<article
+							class="rounded-[2rem] border border-[#d8e2d6] bg-white p-6 shadow-[0_14px_32px_rgba(20,45,32,0.06)]">
+							<div class="text-3xl">🌿</div>
+							<h3 class="mt-4 text-2xl" style="font-family: 'Cormorant Garamond', serif;">Udara Segar</h3>
+							<p class="mt-2 text-sm leading-7 text-[#62756c]">Nikmati suasana sejuk yang menenangkan dan
+								nyaman untuk bersantai dan beristirahat.</p>
+						</article>
+						<article
+							class="rounded-[2rem] border border-[#d8e2d6] bg-white p-6 shadow-[0_14px_32px_rgba(20,45,32,0.06)]">
+							<div class="text-3xl">🍽️</div>
+							<h3 class="mt-4 text-2xl" style="font-family: 'Cormorant Garamond', serif;">Kuliner Lokal
+							</h3>
+							<p class="mt-2 text-sm leading-7 text-[#62756c]">Tersedia UMKM dengan pilihan makanan dan
+								minuman khas daerah.</p>
+						</article>
+						<article
+							class="rounded-[2rem] border border-[#d8e2d6] bg-white p-6 shadow-[0_14px_32px_rgba(20,45,32,0.06)]">
+							<div class="text-3xl">📷</div>
+							<h3 class="mt-4 text-2xl" style="font-family: 'Cormorant Garamond', serif;">Spot Foto</h3>
+							<p class="mt-2 text-sm leading-7 text-[#62756c]">Latar danau dan pegunungan cocok untuk
+								dokumentasi perjalanan.</p>
+						</article>
+						<article
+							class="rounded-[2rem] border border-[#d8e2d6] bg-white p-6 shadow-[0_14px_32px_rgba(20,45,32,0.06)]">
+							<div class="text-3xl">🛥️</div>
+							<h3 class="mt-4 text-2xl" style="font-family: 'Cormorant Garamond', serif;">Wahana & Tempat
+								Istirahat</h3>
+							<p class="mt-2 text-sm leading-7 text-[#62756c]">Wahana perahu dan gazebo untuk tempat
+								beristirahat.</p>
+						</article>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="galeri" class="bg-[#12271f] py-16 sm:py-20">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="flex flex-col gap-3 sm:items-start sm:justify-between lg:flex-row lg:items-end">
+					<div>
+						<p class="text-sm font-bold uppercase tracking-[0.24em] text-[#8bcf9d]">Galeri</p>
+					</div>
+				</div>
+
+				<div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+					<img src="img/gal1.jpeg" alt="Danau dan pegunungan"
+						class="h-72 w-full rounded-[2rem] object-cover" />
+					<img src="img/gal2.jpeg" alt="Kabut pegunungan" class="h-72 w-full rounded-[2rem] object-cover" />
+					<img src="img/gal3.jpeg" alt="Pemandangan hijau"
+						class="h-72 w-full rounded-[2rem] object-cover md:col-span-2 xl:col-span-1" />
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		const menuButton = document.getElementById('menuButton');
+		const mobileMenu = document.getElementById('mobileMenu');
+
+		if (menuButton && mobileMenu) {
+			menuButton.addEventListener('click', () => {
+				const isHidden = mobileMenu.classList.toggle('hidden');
+				menuButton.setAttribute('aria-expanded', String(!isHidden));
+			});
+		}
+	</script>
+</body>
+
+</html>
