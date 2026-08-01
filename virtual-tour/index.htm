@@ -323,46 +323,28 @@ loadTour()
             return window.innerHeight > window.innerWidth;
         }
 
-        function resetViewerLayout() {
-            var viewer = document.querySelector('#viewer');
-            if (viewer) {
-                viewer.style.setProperty('width', '100vw', 'important');
-                viewer.style.setProperty('height', '100vh', 'important');
-                viewer.style.setProperty('top', '0px', 'important');
-                viewer.style.setProperty('left', '0px', 'important');
-                viewer.style.setProperty('margin', '0px', 'important');
-                viewer.style.setProperty('transform', 'none', 'important');
-            }
-            window.scrollTo(0, 0);
-            [0, 100, 300, 600, 1000].forEach(function(delay) {
-                setTimeout(function() {
-                    if (viewer) {
-                        viewer.style.setProperty('width', '100vw', 'important');
-                        viewer.style.setProperty('height', '100vh', 'important');
-                        viewer.style.setProperty('top', '0px', 'important');
-                        viewer.style.setProperty('left', '0px', 'important');
-                        viewer.style.setProperty('margin', '0px', 'important');
-                        viewer.style.setProperty('transform', 'none', 'important');
-                    }
-                    window.scrollTo(0, 0);
-                    window.dispatchEvent(new Event('resize'));
-                }, delay);
-            });
+        function lockOrientationLandscape() {
+            try {
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(function() {});
+                } else if (screen.lockOrientation) {
+                    screen.lockOrientation('landscape');
+                } else if (screen.webkitLockOrientation) {
+                    screen.webkitLockOrientation('landscape');
+                } else if (screen.mozLockOrientation) {
+                    screen.mozLockOrientation('landscape');
+                }
+            } catch(e) {}
         }
 
         function enterLandscapeMode() {
             var el = document.documentElement;
             var rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-            
             if (rfs) {
                 try {
                     var promise = rfs.call(el);
                     if (promise && promise.then) {
-                        promise.then(function() {
-                            lockOrientationLandscape();
-                        }).catch(function() {
-                            lockOrientationLandscape();
-                        });
+                        promise.then(lockOrientationLandscape).catch(lockOrientationLandscape);
                     } else {
                         lockOrientationLandscape();
                     }
@@ -373,60 +355,39 @@ loadTour()
                 lockOrientationLandscape();
             }
             dismissOrientationOverlay();
-            resetViewerLayout();
-        }
-
-        function lockOrientationLandscape() {
-            if (screen.orientation && screen.orientation.lock) {
-                screen.orientation.lock('landscape').catch(function(err) {
-                    console.log('Orientation lock info:', err);
-                });
-            } else if (screen.lockOrientation) {
-                screen.lockOrientation('landscape');
-            } else if (screen.webkitLockOrientation) {
-                screen.webkitLockOrientation('landscape');
-            } else if (screen.mozLockOrientation) {
-                screen.mozLockOrientation('landscape');
-            }
-            resetViewerLayout();
         }
 
         function dismissOrientationOverlay() {
             var overlay = document.getElementById('orientationOverlay');
             if (overlay) overlay.style.display = 'none';
-            resetViewerLayout();
         }
 
+        var orientationCheckTimeout = null;
         function checkMobileOrientation() {
             var overlay = document.getElementById('orientationOverlay');
             if (!overlay) return;
 
             if (isMobileDevice() && isPortraitOrientation()) {
                 overlay.style.display = 'flex';
-                if (sessionStorage.getItem('autoLandscape') === 'true') {
-                    lockOrientationLandscape();
-                }
             } else {
                 overlay.style.display = 'none';
-                resetViewerLayout();
             }
         }
 
         window.addEventListener('resize', function() {
-            checkMobileOrientation();
-            resetViewerLayout();
+            if (orientationCheckTimeout) clearTimeout(orientationCheckTimeout);
+            orientationCheckTimeout = setTimeout(checkMobileOrientation, 150);
         });
+
         window.addEventListener('orientationchange', function() {
-            setTimeout(function() {
-                checkMobileOrientation();
-                resetViewerLayout();
-            }, 200);
+            if (orientationCheckTimeout) clearTimeout(orientationCheckTimeout);
+            orientationCheckTimeout = setTimeout(checkMobileOrientation, 200);
         });
 
         document.addEventListener('DOMContentLoaded', function() {
             checkMobileOrientation();
-            resetViewerLayout();
             if (sessionStorage.getItem('autoLandscape') === 'true') {
+                sessionStorage.removeItem('autoLandscape');
                 lockOrientationLandscape();
             }
         });
