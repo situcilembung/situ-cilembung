@@ -329,6 +329,84 @@ loadTour()
         function isOVRWeb(){
             return window.location.hash.substring(1).split('&').indexOf('ovrweb') > -1;
         }
+
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 900 && window.innerHeight !== window.innerWidth);
+        }
+
+        function isPortraitOrientation() {
+            return window.innerHeight > window.innerWidth;
+        }
+
+        function enterLandscapeMode() {
+            var el = document.documentElement;
+            var rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+            
+            if (rfs) {
+                try {
+                    var promise = rfs.call(el);
+                    if (promise && promise.then) {
+                        promise.then(function() {
+                            lockOrientationLandscape();
+                        }).catch(function() {
+                            lockOrientationLandscape();
+                        });
+                    } else {
+                        lockOrientationLandscape();
+                    }
+                } catch(e) {
+                    lockOrientationLandscape();
+                }
+            } else {
+                lockOrientationLandscape();
+            }
+            dismissOrientationOverlay();
+        }
+
+        function lockOrientationLandscape() {
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape').catch(function(err) {
+                    console.log('Orientation lock info:', err);
+                });
+            } else if (screen.lockOrientation) {
+                screen.lockOrientation('landscape');
+            } else if (screen.webkitLockOrientation) {
+                screen.webkitLockOrientation('landscape');
+            } else if (screen.mozLockOrientation) {
+                screen.mozLockOrientation('landscape');
+            }
+        }
+
+        function dismissOrientationOverlay() {
+            var overlay = document.getElementById('orientationOverlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        function checkMobileOrientation() {
+            var overlay = document.getElementById('orientationOverlay');
+            if (!overlay) return;
+
+            if (isMobileDevice() && isPortraitOrientation()) {
+                overlay.style.display = 'flex';
+                if (sessionStorage.getItem('autoLandscape') === 'true') {
+                    lockOrientationLandscape();
+                }
+            } else {
+                overlay.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', checkMobileOrientation);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(checkMobileOrientation, 200);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkMobileOrientation();
+            if (sessionStorage.getItem('autoLandscape') === 'true') {
+                lockOrientationLandscape();
+            }
+        });
     </script>
     <style type="text/css">
         html, body { width: 100%; height: 100%; margin: 0; padding: 0; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
@@ -379,10 +457,115 @@ loadTour()
                 height: 44px;
             }
         }
+
+        /* Mobile Landscape Overlay */
+        #orientationOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 32, 25, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 999999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            box-sizing: border-box;
+            color: #ffffff;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .orientation-card {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 32px 24px;
+            max-width: 340px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .phone-rotate-icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 16px;
+            animation: phoneRotate 2s infinite ease-in-out;
+        }
+
+        @keyframes phoneRotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+        }
+
+        .orientation-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .orientation-desc {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 22px;
+        }
+
+        .orientation-btn-primary {
+            width: 100%;
+            padding: 13px 18px;
+            border-radius: 50px;
+            background: #60c28c;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.92rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(96, 194, 140, 0.4);
+            transition: all 0.2s ease;
+            margin-bottom: 8px;
+        }
+
+        .orientation-btn-primary:active {
+            transform: scale(0.96);
+            background: #4eb07b;
+        }
+
+        .orientation-btn-secondary {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.82rem;
+            cursor: pointer;
+            padding: 6px;
+            text-decoration: underline;
+        }
     </style>
     <link rel="stylesheet" href="fonts.css?v=1785486688893">
 </head>
 <body onload="onLoad()">
+    <div id="orientationOverlay">
+        <div class="orientation-card">
+            <svg class="phone-rotate-icon" viewBox="0 0 24 24" fill="none" stroke="#60c28c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="3" ry="3"></rect>
+                <path d="M12 18h.01"></path>
+                <path d="M19 9l3 3-3 3"></path>
+                <path d="M22 12H15"></path>
+            </svg>
+            <div class="orientation-title">Miringkan Layar HP Anda</div>
+            <div class="orientation-desc">Untuk pengalaman Virtual Tour terbaik, silakan putar posisi HP Anda ke posisi miring (landscape).</div>
+            <button class="orientation-btn-primary" onclick="enterLandscapeMode()">Putar & Kunci Layar 🔄</button>
+            <button class="orientation-btn-secondary" onclick="dismissOrientationOverlay()">Lanjutkan Tegak</button>
+        </div>
+    </div>
     <a href="../index.html" class="back-to-website-btn" title="Kembali ke Website" aria-label="Kembali ke Website" onclick="if(window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1){ window.history.back(); return false; }">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"></line>

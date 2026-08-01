@@ -110,7 +110,7 @@
 						</p>
 
 						<div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-							<a href="/virtual-tour/index.htm"
+							<a href="/virtual-tour/index.htm" id="btnVirtualTour"
 								class="inline-flex items-center justify-center rounded-full bg-[#60c28c] px-8 py-4 text-sm font-extrabold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#4eb07b]">
 								Lihat Virtual Tour
 							</a>
@@ -267,6 +267,19 @@
 			menuButton.addEventListener('click', () => {
 				const isHidden = mobileMenu.classList.toggle('hidden');
 				menuButton.setAttribute('aria-expanded', String(!isHidden));
+			});
+		}
+
+		const btnVirtualTour = document.getElementById('btnVirtualTour');
+		if (btnVirtualTour) {
+			btnVirtualTour.addEventListener('click', () => {
+				const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 900;
+				if (isMobile) {
+					sessionStorage.setItem('autoLandscape', 'true');
+					if (screen.orientation && screen.orientation.lock) {
+						screen.orientation.lock('landscape').catch(() => {});
+					}
+				}
 			});
 		}
 	</script>
